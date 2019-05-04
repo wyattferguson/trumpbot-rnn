@@ -2,7 +2,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import tensorflow as tf
 import numpy as np
 import os
-import time
 
 
 def build_model(vocab_size, embedding_dim, rnn_units, batch_size):
@@ -27,111 +26,50 @@ def loss(labels, logits):
     return tf.keras.losses.sparse_categorical_crossentropy(labels, logits, from_logits=True)
 
 
-def generate_text(model,char2idx,idx2char, start_string):
-    # Number of characters to generate
-    num_generate = 140
+def parse_training_file():
+    training_file = './tweets.txt'
 
-    # Converting our start string to numbers (vectorizing)
-    input_eval = [char2idx[s] for s in start_string]
-    input_eval = tf.expand_dims(input_eval, 0)
-
-    text_generated = []
-
-    # Low temperatures results in more predictable text.
-    # Higher temperatures results in more surprising text.
-    temperature = 1.0
-
-    # Here batch size == 1
-    model.reset_states()
-    for i in range(num_generate):
-        predictions = model(input_eval)
-        # remove the batch dimension
-        predictions = tf.squeeze(predictions, 0)
-
-        # using a categorical distribution to predict the word returned by the model
-        predictions = predictions / temperature
-        predicted_id = tf.random.categorical(predictions, num_samples=1)[-1,0].numpy()
-
-        # We pass the predicted word as the next input to the model
-        # along with the previous hidden state
-        input_eval = tf.expand_dims([predicted_id], 0)
-
-        text_generated.append(idx2char[predicted_id])
-
-    return (start_string + ''.join(text_generated))
-
-
-def model_train():
-    text = open('./tweets.txt', 'rb').read().decode(encoding='utf-8')
+    text = open(training_file, 'rb').read().decode(encoding='utf-8')
     vocab = sorted(set(text))
     char2idx = {u:i for i, u in enumerate(vocab)}
     idx2char = np.array(vocab)
-
     text_as_int = np.array([char2idx[c] for c in text])
-
-    # The maximum length sentence we want for a single input in characters
-    seq_length = 140
-
-    # Create training examples / targets
-    char_dataset = tf.data.Dataset.from_tensor_slices(text_as_int)
-    sequences = char_dataset.batch(seq_length+1, drop_remainder=True)
+    return [len(vocab), char2idx, idx2char, text_as_int]
 
 
-    # Batch size
+def model_train():
+    EPOCHS = 50
     BATCH_SIZE = 64
-
-    # Buffer size to shuffle the dataset
     BUFFER_SIZE = 10000
+    EMBEDDING_DIM = 256
+    RNN_UNITS = 1024
+    SEQ_LENGTH = 140
+
+    vocab_len, __, __, text_as_int = parse_training_file()
+
+    char_dataset = tf.data.Dataset.from_tensor_slices(text_as_int)
+    sequences = char_dataset.batch(SEQ_LENGTH+1, drop_remainder=True)
 
     dataset = sequences.map(split_input_target)
     dataset = dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE, drop_remainder=True)
 
-    # The embedding dimension
-    embedding_dim = 256
-
-    # Number of RNN units
-    rnn_units = 1024
-
     model = build_model(
-        vocab_size = len(vocab),
-        embedding_dim=embedding_dim,
-        rnn_units=rnn_units,
+        vocab_size = vocab_len,
+        embedding_dim=EMBEDDING_DIM,
+        rnn_units=RNN_UNITS,
         batch_size=BATCH_SIZE)
 
     model.compile(optimizer='adam', loss=loss)
     
-    # Name of the checkpoint files
     checkpoint_prefix = os.path.join('./training_checkpoints', "ckpt_{epoch}")
 
     checkpoint_callback=tf.keras.callbacks.ModelCheckpoint(
         filepath=checkpoint_prefix,
         save_weights_only=True)
 
-    EPOCHS=10
-
     history = model.fit(dataset, epochs=EPOCHS, callbacks=[checkpoint_callback])
+    return history
 
 
-def load_model():
-    embedding_dim = 256
-    rnn_units = 1024
-
-    text = open('./tweets.txt', 'rb').read().decode(encoding='utf-8')
-    vocab = sorted(set(text))
-    char2idx = {u:i for i, u in enumerate(vocab)}
-    idx2char = np.array(vocab)
-
-    text_as_int = np.array([char2idx[c] for c in text])
-
-    tf.train.latest_checkpoint('./training_checkpoints')
-    model = build_model(len(vocab), embedding_dim, rnn_units, batch_size=1)
-    model.load_weights(tf.train.latest_checkpoint('./training_checkpoints'))
-    model.build(tf.TensorShape([1, None]))
-    model.summary()
-    print(generate_text(model, char2idx, idx2char, start_string=u"Obama"))
-    return model
-
-if __name__ == "__main__":    
-    #model = load_model()
+if __name__ == "__main__":
     model_train()
-    
