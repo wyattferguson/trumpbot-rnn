@@ -40,26 +40,36 @@ This will generate 10 tweets from a random group of topics. If you open the trum
 
     tweets - Number of messsages you want generated
 
-    temperature - This controls how predictable the tweet will be, by default its random from 0.1 -> 0.4, anything above about 0.7 generates garbage.
+    temperature - This controls how predictable the tweet will be, by 
+    default its random from 0.1 -> 0.4, anything above about 0.7 generates
+     garbage.
 
-    talking_points - Is a list of inputs to feed the network, try out differnt words and see what works.
+    talking_points - Is a list of inputs to feed the network, try out 
+    differnt words and see what works.
 
-    num_generate - This controls the length of the message you want to get generated.
+    num_generate - This controls the length of the message you want to
+     get generated.
 
 ## Result
 For my first crack at text generation Im happy with the results. Here are some sample tweets:
 
-    hillary Clinton has been a total disaster. If you cant admit that the U.S. more than has been treated big baster I am a g
+    hillary Clinton has been a total disaster. If you cant admit that 
+    the U.S. more than has been treated big baster I am a g
 
     Donald Trump is 45% Iran
 
-    healthe lobbyist now wants to raise taxes for our country in the first place! If only one thing is clea
+    healthe lobbyist now wants to raise taxes for our country in the 
+    first place! If only one thing is clea
 
-    friends support Trump Rally Anger Golf Club of Caporate legislation at the WhiteHouse today! #MakeAmericaGreatAgain Thank you for your support! #Trump2016 
+    friends support Trump Rally Anger Golf Club of Caporate legislation 
+    at the WhiteHouse today! #MakeAmericaGreatAgain Thank you for your
+     support! #Trump2016 
 
-    koreau like you it was great being in the last election then will be a great show. I have a fan o
+    koreau like you it was great being in the last election then will be
+     a great show. I have a fan o
 
-    koreau lies and losers and losers will be a great show with the U.S. The President has a various past c
+    koreau lies and losers and losers will be a great show with the U.S.
+     The President has a various past c
 
 
 ## What I learned
