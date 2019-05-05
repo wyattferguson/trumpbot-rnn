@@ -1,5 +1,5 @@
 # Trumpbot v1.0
-Trumpbot was my attempt at creating a RNN trained on Donald Trumps(DT) tweets. I used this as a sort of practice project for learning a bit about RNN's and Tensorflow 2. The result was a chaos and a learning experience so lets dive in.
+Trumpbot was my attempt at creating a RNN trained on Donald Trumps(DT) tweets. I used this as a sort of practice project for learning a bit about RNN's and Tensorflow 2. The result was a chaos and a learning experience so let's dive in.
 
 
 ## Setup
@@ -15,18 +15,18 @@ The entire dataset was just tweets scraped from the DT twitter account. I used J
 The first thing about using Tweets as a dataset for training is that they are filled with garbage that wreaks havoc when training. Heres what I did:
 
 - Removed any links or urls to photos
-- Simplified all the puncuation, with Trump this is a big thing, hes tweets are a clown fiesta of periods and exclemation marks.
+- Simplified all the puncuation, with Trump this is a big thing, his tweets are a clown fiesta of periods and exclemation marks.
 - Cleaned out any invisible or non-english characters, any foreign characters just casuases trouble.
-- Removed the '@' symbol, I'll explaid why later.
+- Removed the '@' symbol, I'll explain why later.
 - Removed the first couple of months of tweets, they were mostly about the celebrity apprentice and not really core to what I was trying to capture.
-- Removed any retweets or super short @replys
+- Removed any retweets or super short @replies
 
 The final training text is in tweets.txt which altogether is about 20,000 tweets.
 
 ## Training
-I trained the model twice, the first time for 30 epochs which took around 6 hours. The result was absolute garbage, at the time I hadnt removed hidden or foreign characters so it took 6 hours to spit out complete nonsense. So after I cleaned out the tweets again, I ran the training over night for 50 epochs this time.
+I trained the model twice, the first time for 30 epochs which took around 6 hours. The result was absolute garbage, at the time I hadn't removed hidden or foreign characters so it took 6 hours to spit out complete nonsense. So after I cleaned out the tweets again, I ran the training overnight for 50 epochs this time.
 
-Just run the learn file to train it again if you want, the model check points are store in the 'training_checkpoints' folder
+Just run the learn.py file to train it again if you want, the model check points are stored in the 'training_checkpoints' folder
 
     python3 learn.py
 
@@ -38,17 +38,17 @@ So now the fun part, you can run the command:
 
 This will generate 10 tweets from a random group of topics. If you open the trumpbot.py file theres a few things you can play with:
 
-    tweets - Number of messsages you want generated
+    tweets - Number of messages you want generated
 
     temperature - This controls how predictable the tweet will be, by 
-    default its random from 0.1 -> 0.4, anything above about 0.7 generates
-     garbage.
+        default its random from 0.1 -> 0.4, anything above about 0.7 generates
+        garbage.
 
     talking_points - Is a list of inputs to feed the network, try out 
-    differnt words and see what works.
+        differnt words and see what works.
 
     num_generate - This controls the length of the message you want to
-     get generated.
+         get generated.
 
 ## Result
 For my first crack at text generation Im happy with the results. Here are some sample tweets:
@@ -74,15 +74,15 @@ For my first crack at text generation Im happy with the results. Here are some s
 
 ## What I learned
 
-- Tweets make for a tough training set. Things like @ mentions just polute the hell out of the text so unless you want your bot to be constantly @ing everything I need to find a better way to deal with that.
+- Tweets make for a tough training set. Things like @ mentions just pollute the hell out of the text so unless you want your bot to be constantly @ing everything I need to find a better way to deal with that.
 
-- Things I thought the bot would love talking about stuff like #MAGA, russia, china, collusion just generate garbage strings.
+- Things I thought the bot would love talking about stuff like #MAGA, Russia, China, and collusion just generate garbage strings.
 
 - Text generation is really hard, and takes a ton of training time. 
 
 - I could probably get a bit better results if I let it train a bit longer but for any drastic improvements I probably need to try another method or spend alot more time tuning the training set.
 
-- Pick a subject that doesnt tweet like hes a dad yelling at a little league game. I think because his tweets are short little outbursts its hard to generate a predictable pattern across them.
+- Pick a subject that doesn't tweet like hes a dad yelling at a little league game. I think because his tweets are short little outbursts its hard to generate a predictable pattern across them.
 
 - The words it groups together for differnt topics is probably worth looking at, like whenever you use 'hillary' as a input it usually has the words 'liar' or 'disaster' in the sentence. or how it loves telling you when its gonna be on @Foxandfriends
 
