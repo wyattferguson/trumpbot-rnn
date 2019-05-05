@@ -1,6 +1,56 @@
 # Trumpbot v1.0
 Trumpbot was my attempt at creating a RNN trained on Donald Trumps(DT) tweets. I used this as a sort of practice project for learning a bit about RNN's and Tensorflow 2. The result was a chaos and a learning experience so let's dive in.
 
+## Run with Containers
+
+### Docker
+
+If you don't want to install dependencies to your host, you can build a Docker container
+with the included Dockerfile:
+
+```bash
+$ docker build -t trumpbot .
+```
+
+The entrypoint is the script to generate the tweets:
+
+```bash
+$ docker run trumpbot
+...
+ obamas Top and France at 900 PM on FoxNews. Anderson Congratulations to the House vote for MittRomney o
+
+ hillary Clinton has been a total disaster. I have an idea for her great speech on CNN in the world  a great honor for me and his partisan hotel and every spor
+
+ friends support Trump International Golf Club on the Paris About that Right School is started by the DNC and Clinton and the DNC that will be a great show with t
+```
+
+If you want to interact with the container (perhaps training first) you can shell inside instead:
+
+```bash
+$ docker run -it --entrypoint bash trumpbot
+root@b53b98f12c34:/code# ls
+Dockerfile  README.md  __init__.py  learn.py  raw_tweets.txt  requirements.txt	training_checkpoints  trumpbot.py  tweets.txt
+```
+
+You'll be in the `/code` directory that contains the source code. 
+
+### Singularity
+
+For users that want to perhaps use GPU (or better leverage the host) the recommendation is to
+use a [Singularity](https://www.sylabs.io/guides/3.2/user-guide/) container, and a recipe file [Singularity](Singularity) is provided
+to build the container.
+
+```bash
+$ sudo singularity build trumpbot.sif Singularity
+```
+
+And then to run (add the --nv flag if you want to leverage any host libraries).
+
+```bash
+$ singularity run trumpbot.sif
+```
+
+If you need to change the way that tensorflow or numpy are installed, you can edit the Singularity or Docker recipes.
 
 ## Setup
 Setup is pretty straightforward. It only needs numpy and tensorflow 2 alpha just run the start pip install:
