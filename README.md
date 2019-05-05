@@ -5,7 +5,7 @@ Trumpbot was my attempt at creating a RNN trained on Donald Trumps(DT) tweets. I
 ## Setup
 Setup is pretty straightforward. It only needs numpy and tensorflow 2 alpha just run the start pip install:
 
-    pip3 install -r requirments.txt
+    pip3 install -r requirements.txt
 
 
 ## Dataset
