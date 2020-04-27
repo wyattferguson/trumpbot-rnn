@@ -1,0 +1,23 @@
+consumer_key: 
+consumer_secret: 
+access_key: 
+access_secret: 
+
+twitter_users:
+  - realDonaldTrump
+  - dril
+
+num_epochs: 5
+gen_epochs: 1
+batch_size: 128
+train_size: 1.0
+new_model: True
+
+# Only applicable if new_model: True
+model_config:
+  rnn_layers: 6
+  rnn_size: 512
+  rnn_bidirectional: False
+  max_length: 120
+  dim_embeddings: 100
+  word_level: False
