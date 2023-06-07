@@ -1,4 +1,4 @@
-# Trumpbot v1.0
+# Trumpbot v0.1
 Trumpbot was my attempt at creating a RNN trained on Donald Trumps(DT) tweets. I used this as a sort of practice project for learning a bit about RNN's and Tensorflow 2. The result was a chaos and a learning experience so let's dive in.
 
 ## Run with Containers
@@ -141,15 +141,11 @@ For my first crack at text generation Im happy with the results. Here are some s
 I feel like this is good starting point, and with some work we might have a digital orange man bot in our future.
 
 
-## :postbox: Credit, Contact & Support
+## :postbox: Contact & Support
 
-Created by [Wyatt Ferguson](https://twitter.com/wyattxdev)
+Created by [Wyatt Ferguson](@wyattxdev@mastodon.social)
 
-For any comments or questions your can reach me on Twitter [@wyattxdev](https://twitter.com/wyattxdev) or visit my little portfolio at [wyattf.dev](https://wyattf.dev)
+For any comments or questions message me on [Mastodon](@wyattxdev@mastodon.social)
 
-If you like my theme and want to support me
-
-### [:coffee: Buy Me A Coffee](https://www.buymeacoffee.com/wyattferguson)
-
-### [:zap: Follow me on Twitter](https://twitter.com/wyattxdev)
+[:coffee: Buy Me A Coffee](https://www.buymeacoffee.com/wyattferguson)
 
